@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es-mx">
+    <head>
+        <title>{% block titulo %} {% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/nav.css">
+        {% block csspersonalizado %} {% endblock %}
+        <script src="/static/js/jquery-3.2.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/nav.js"></script>
+        {% if sesionIniciada %}
+        <script src="/static/js/notificaciones.js"></script>
+        {% endif %}
+        {% block jspersonalizado %} {% endblock %}
+    </head>
+    <body>
+        <section class="container-fluid">
+            <section class="row">
+                <nav class="navbar navbar-inverse">
+                    <section class="container-fluid">
+                        <section class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#contenidoNavbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/">TuVid</a>
+                        </section>
+                        <section class="collapse navbar-collapse" id="contenidoNavbar">
+                            <ul class="nav navbar-nav col-md-8">
+                                <li>
+                                    <form id="formBusqueda" class="navbar-form navbar-right" action="/buscar/" method="get">
+                                        <section class="form-group">
+                                            <input type="text" class="form-control" id="terminoBusqueda" name="terminobusqueda" placeholder="Buscar vídeo...">
+                                        </section> 
+                                        <button class="btn btn-default">Buscar</button>
+                                    </form>
+                                </li>
+                                {% if not sesionIniciada %}
+                                <li><a class="tomodal" data-toggle="modal" data-target="#modalRegistro">Registrarse</a></li>
+                                <li><a class="tomodal" data-toggle="modal" data-target="#modalIniciarSesion">Iniciar sesión</a></li>
+                                {% endif %}
+                                {% if sesionIniciada %}
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown"><span style="cursor:pointer;" id="numeroNotificaciones" class="badge">0</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a><small id="n1">No tienes notificaciones</small></a></li>
+                                        <li><a><small id="n2"></small></a></li>
+                                        <li><a><small id="n3"></small></a></li>
+                                        <li><a><small id="n4"></small></a></li>
+                                        <li><a><small id="n5"></small></a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="/subirvideo/" class="tomodal">Subir video</a></li> 
+                                <li><a href="/cerrarsesion/" class="tomodal">Cerrar sesión</a></li>
+                                {% endif %}
+                            </ul>
+                        </section>  
+                    </section>
+                </nav>
+            </section>
+            <section id="modalRegistro" class="modal fade" role="dialog">
+                <section class="modal-dialog">
+                    <section class="modal-content">
+                        <section class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Registrarse</h4>
+                        </section>
+                        <section class="modal-body">
+                            <section id="alertaformRegistroVacio" class="alert alert-danger fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>¡Error!</strong> Debe ingresar usuario y contraseña o importar un archivo xml
+                            </section>
+                            <form action="/registrarcuenta/" id="formRegistro" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <section class="form-group">
+                                    <label for="usuario">Usuario:</label>
+                                    <input type="text" placeholder="Ingrese usuario" class="form-control" id="usuarioregistro" name="usuario">
+                                </section>
+                                <section class="form-group">
+                                    <label for="contrasenia">Contraseña:</label>
+                                    <input type="password" name="contrasenia" class="form-control" id="contraseniaregistro">
+                                </section>
+                                <section class="form-group">
+                                    <label for="archivoxml">Si lo desea, puede importar un archivo XML para importar una cuenta:</label>
+                                    <input class="form-control file" type="file" name="archivoxml" accept="text/xml" id="archivoxmlregistro">
+                                </section>
+                            </form>
+                        </section>
+                        <section class="modal-footer">
+                            <button type="submit" id="submitregistro" form="formRegistro" class="btn btn-default">Registrarse</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section id="modalIniciarSesion" class="modal fade" role="dialog">
+                <section class="modal-dialog">
+                    <section class="modal-content">
+                        <section class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Iniciar sesión</h4>
+                        </section>
+                        <section class="modal-body">
+                            <form action="/iniciarsesion/" id="formInicioSesion" method="post">
+                                {% csrf_token %}
+                                <section class="form-group">
+                                    <label for="usuario">Usuario:</label>
+                                    <input type="text" class="form-control" placeholder="Ingrese usuario" id="usuarioinicio" name="usuario" required>
+                                </section>
+                                <section class="form-group">
+                                    <label for="contrasenia">Contraseña:</label>
+                                    <input type="password" name="contrasenia" class="form-control" id="contraseniainicio" required>
+                                </section>
+                            </form>
+                        </section>
+                        <section class="modal-footer">
+                            <button type="submit" form="formInicioSesion" class="btn btn-default">Iniciar sesión</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            {% block cuerpopagina %}{% endblock %}
+            <br>
+            <br>
+            <section class="row">
+                <footer class="panel-footer">
+                    <p><small>Saúl Enrique Melchor Ramírez</small></p>
+                    <p><small>Desarrollo de Sistemas Web</small></p>
+                    <p><small>Licenciatura en Ingeniería de Software</small></p>
+                    <p><small>Facultad de Estadística e Informática</small></p>
+                </footer>
+            </section>
+        </section>
+        
+  </body>
+</html>

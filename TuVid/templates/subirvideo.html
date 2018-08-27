@@ -1,0 +1,52 @@
+{% extends 'nav.html' %}
+{% block jspersonalizado %} 
+<script src="/static/js/subirvideo.js"></script>
+{% endblock %}
+{% block cuerpopagina %}
+<section class="container-fluid">
+    <section class="row">
+        <section class="col-md-2"></section>
+        <section class="col-md-8">
+            <form action="{{ direccionServidorVideo }}/nuevovideo/" id="formVideo" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Subir un video:</legend>
+                    <section class="form-group">
+                        <input style="display:none;" class="form-control" type="text" name="idcuenta" id="idcuenta" value="{{ idcuenta }}" readonly required>
+                    </section>
+                    <section class="form-group">
+                        <input class="form-control" type="text" name="titulo" id="titulo" placeholder="Título...." required>
+                    </section>
+                    <section class="form-group">
+                        <label for="video">Seleccione el vídeo:</label>
+                        <input class="form-control file" type="file" accept="video/mp4,video/x-m4v,video/*" name="video" id="video" required>
+                    </section>
+                    <section class="form-group">
+                        <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Descripción..." rows="6"></textarea>
+                    </section>
+                    <section class="form-group">
+                        <label for="thumbnail">Inserte su propia miniatura:</label>
+                        <input class="form-control file" type="file" accept="image/*" name="thumbnail" id="thumbnail">
+                    </section>
+                    <input type="submit" value="Subir video">
+                </fieldset>
+            </form>
+        </section>
+        <section class="col-md-2"></section>
+        <section class="container-fluid" id="barra">
+                <section class="col-md-2"> </section>
+                <section class="col-md-8">
+                    <h6 id="encabezadoBarra">Se comenzó a subir tu archivo</h6>
+                    <section class="progress"  >
+                        <section id="barraProgreso" class="progress-bar progress-bar-striped active" role="progressbar"></section>
+                    </section>
+                </section>
+                <section class="col-md-2"></section>  
+        </section>
+          
+        
+    </section>
+    
+</section>
+{% endblock cuerpopagina %}
+    

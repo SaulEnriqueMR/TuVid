@@ -1,0 +1,24 @@
+{% extends 'nav.html' %}
+{% block csspersonalizado %}
+<link rel="stylesheet" href="/static/css/vervideo.css">
+{% endblock %}
+{% block titulo %}TuVid - Ver vídeo - {{ video.titulo }}{% endblock %}
+{% block cuerpopagina %}
+<section class="container-fluid">
+    <video class="col-md-8" src="{{ direccionServidorVideo }}{{ video.ubicacionvideo }}" poster="{{ direccionServidorVideo }}{{ video.ubicacionthumbnail }}" controls></video>
+    <section class="col-md-4">
+        <h3 class="col-md-12">{{ video.titulo }}</h3>
+        <p class="col-md-12">{{ video.usuario }}</p>
+        {% if video.visitas is None %}
+        <p class="col-md-12"><small>0 visitas</p>
+        {% endif %}
+        {% if not video.visitas is None %}
+        <p class="col-md-12">{{ video.visitas }} visitas</p>
+        {% endif %}
+        {% if video.descripcion %}
+        <p class="col-md-12"><small>{{ video.descripcion }}</p>
+        {% endif %}
+        <p class="col-md-12">Subido en {{ video.fecha }}</p>
+    </section>  
+</section>
+{% endblock %}

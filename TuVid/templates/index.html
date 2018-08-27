@@ -1,0 +1,98 @@
+{% extends 'nav.html' %}
+{% block csspersonalizado %} 
+<link rel="stylesheet" href="/static/css/index.css">
+{% endblock %}
+{% block titulo %}TuVid{% endblock %}
+{% block cuerpopagina %}
+{% if not error and mensaje %}
+<section class="alert alert-success fade in">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>¡Éxito!</strong> {{ mensaje }}
+</section>
+{% endif %}
+{% if error and not listaErrores %}
+<section class="alert alert-danger fade in">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>¡Error!</strong> {{ mensaje }}
+</section>
+{% endif %}
+{% if listaErrores %}
+<section class="alert alert-warning fade in">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>¡Hubo errores en el registro!</strong> {{ mensaje }}
+  <br>
+  <br>
+  <ul class="list-group">
+{% for e in listaErrores%}
+    <li class="list-group-item list-group-item-warning">{{ e }}</li>
+{% endfor %}
+  </ul>
+</section>
+{% endif %}
+<section class="container-fluid well">
+  <h4>Los videos más recientes</h4>
+  {% for video in recientes%}
+  <section class="row">
+    <section class="col-md-12 panel panel-default" >
+      <br>
+      <p class="col-md-4"><a href="/vervideo/{{ video.idvideo }}/"><img src="{{ direccionServidorVideo }}{{ video.ubicacionthumbnail}}"></a></p>
+      <section class="col-md-8 informacionthumbnail panel-body">
+        <p><a href="/vervideo/{{ video.idvideo }}/">{{ video.titulo }}</a></p>
+        <p><b>{{ video.usuario }}</b></p>
+        {% if video.visitas is None %}
+        <p><small>0 visitas</small></p>
+        {% endif %}
+        {% if not video.visitas is None %}
+        <p><small>{{ video.visitas }} visitas</small></p>
+        {% endif %}
+        <p><small>Subido en {{ video.fecha }}</small></p>
+      </section>
+    </section>
+  </section>
+  {% endfor %}
+</section>
+<section class="container-fluid well">
+  <h4>Los videos más vistos</h4>
+  {% for video in recientes%}
+  <section class="row">
+    <section class="col-md-12 panel panel-default" >
+      <br>
+      <p class="col-md-4"><a href="/vervideo/{{ video.idvideo }}/"><img src="{{ direccionServidorVideo }}{{ video.ubicacionthumbnail}}"></a></p>
+      <section class="col-md-8 informacionthumbnail panel-body">
+        <p><a href="/vervideo/{{ video.idvideo }}/">{{ video.titulo }}</a></p>
+        <p><b>{{ video.usuario }}</b></p>
+        {% if video.visitas is None %}
+        <p><small>0 visitas</small></p>
+        {% endif %}
+        {% if not video.visitas is None %}
+        <p><small>{{ video.visitas }} visitas</small></p>
+        {% endif %}
+        <p><small>Subido en {{ video.fecha }}</small></p>
+      </section>
+    </section>
+  </section>
+  {% endfor %}
+</section>
+<section class="container-fluid well">
+  <h4>Los videos más buscados</h4>
+  {% for video in recientes%}
+  <section class="row">
+    <section class="col-md-12 panel panel-default" >
+      <br>
+      <p class="col-md-4"><a href="/vervideo/{{ video.idvideo }}/"><img src="{{ direccionServidorVideo }}{{ video.ubicacionthumbnail}}"></a></p>
+      <section class="col-md-8 informacionthumbnail panel-body">
+        <p><a href="/vervideo/{{ video.idvideo }}/">{{ video.titulo }}</a></p>
+        <p><b>{{ video.usuario }}</b></p>
+        {% if video.visitas is None %}
+        <p><small>0 visitas</small></p>
+        {% endif %}
+        {% if not video.visitas is None %}
+        <p><small>{{ video.visitas }} visitas</small></p>
+        {% endif %}
+        <p><small>Subido en {{ video.fecha }}</small></p>
+      </section>
+    </section>
+  </section>
+  {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,13 @@
+.tomodal:hover{
+    cursor: pointer;
+}
+#alertaformRegistroVacio{
+    display: none;  
+}
+footer>p{
+    margin-bottom: 0;
+    margin-top: 0
+}
+#barra{
+    display: none;
+}

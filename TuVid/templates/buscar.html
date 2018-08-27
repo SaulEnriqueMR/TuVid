@@ -1,0 +1,34 @@
+{% extends 'nav.html' %}
+{% block titulo %}TuVid - Búsqueda{% endblock %}
+{% block csspersonalizado %} 
+<link rel="stylesheet" href="/static/css/buscar.css">
+{% endblock %}
+{% block cuerpopagina %}
+<section class="container-fluid">
+    {% if resultadobusqueda %}
+    {% for video in resultadobusqueda %}
+    <section class="row">
+        <section class="col-md-10">
+            <p class="col-md-4"><a href="/vervideo/{{ video.idvideo }}/"><img src="{{ direccionServidorVideo }}{{ video.ubicacionthumbnail}}"></a></p>
+            <section class="col-md-8 informacionthumbnail panel-body">
+                <p><a href="/vervideo/{{ video.idvideo }}/">{{ video.titulo }}</a></p>
+                <p><b>{{ video.usuario }}</b></p>
+                {% if video.visitas is None %}
+                <p><small>0 visitas</small></p>
+                {% endif %}
+                {% if not video.visitas is None %}
+                <p><small>{{ video.visitas }} visitas</small></p>
+                {% endif %}
+                <p><small>Subido en {{ video.fecha }}</small></p>
+            </section>
+        </section>
+        <section class="col-md-2"></section>
+    </section>
+    {% endfor %}
+    {% endif %}
+    {% if not resultadobusqueda %}
+    <h6>No hay videos que coincidan con su término de busqueda, pruebe con otro</h6>
+    {% endif %}
+</section>
+{% endblock %}
+
